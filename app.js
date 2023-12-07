@@ -6,20 +6,14 @@ const schema = require('enigma.js/schemas/12.170.2.json');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 // Configurações existentes
-const engineHost = 'awswqlik03.sagagyn.local';
+const engineHost = 'host do Qlik Sense';
 const enginePort = 4747;
-const appId = 'c74fb7f6-47c8-4a0a-9cd3-2b5e518887e7';
-const userDirectory = 'SAGAGYN';
-const userId = 'qlikview';
-const certificatesPath = 'C:/ProgramData/Qlik/Sense/Repository/Exported Certificates/CerticadosQlik/';
-
-/*const filterYear = '2023';
-const filterMonth = 'nov';*/
-
-//let archive = 'D:/QlikSense/AppsData/Resources/ArquivosNPS/NPS_Loja_' + filterMonth + '_' + filterYear + '.csv';
+const appId = 'Id do aplicativo';
+const userDirectory = 'Diretorio de Usuarios';
+const userId = 'Usuario';
+const certificatesPath = 'Diretorio dos certificados';
 
 const readCert = (filename) => fs.readFileSync(path.resolve(certificatesPath, filename));
-
 
 const session = enigma.create({
   schema,
@@ -98,7 +92,6 @@ async function extractData(idObject, filterYear, filterMonth, archiveName, archi
               return year === filterYear.toString() && month === filterMonth;
             })
 
-            //fs.writeFileSync('exported_table.csv', '\ufeff', { encoding: 'utf8', flag: 'w' });
             fs.writeFileSync(archive, '\ufeff', { encoding: 'utf8', flag: 'w' });
 
             return csvWriter
@@ -112,7 +105,6 @@ async function extractData(idObject, filterYear, filterMonth, archiveName, archi
               )
               .then(() => {
                 console.log('Dados exportados com sucesso para ' + archive);
-                //session.close();
               })
               .catch(err => {
                 console.error('Erro ao escrever no arquivo CSV', err);

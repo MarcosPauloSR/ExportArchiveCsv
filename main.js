@@ -7,40 +7,20 @@ let mes = data.toLocaleString('pt-br', { month: 'short' }).replace('.', '');
 
 const extractArqs = [
     {
-        id: 'jAZqVF',
+        id: 'idObjeto',
         filterYear: ano,
         filterMonth: mes,
-        archiveName: 'NPS_Loja_' + mes + '_' + ano + '.csv',
-        archivePath: 'D:/QlikSense/AppsData/Resources/ArquivosNPS/',
-        order: [
-            'Ano', 'Mês', 'Filial', 'Cnpj', 'Departamento',
-            'datareferenciainicial', 'datareferenciafinal', 'dataintegracao',
-            'Status', 'NPS', 'Sucesso%'
-        ]
+        archiveName: 'NomeDoArquivo.csv',
+        archivePath: 'Diretorio onde os arquivos serao salvos',
+        order: ['Array para ordenar as colunas corretamente']
     },
     {
-        id: 'Ammd',
+        id: 'idObjeto2',
         filterYear: ano,
         filterMonth: mes,
-        archiveName: 'NPS_Consultor_' + mes + '_' + ano + '.csv',
-        archivePath: 'D:/QlikSense/AppsData/Resources/ArquivosNPS/',
-        order: [
-            'Ano', 'Mês', 'Consultor', 'Cnpj', 'Departamento',
-            'datareferenciainicial', 'datareferenciafinal', 'dataintegracao',
-            'Status', 'NPS', 'Sucesso%'
-        ]
-    },
-    {
-        id: 'MAARFrf',
-        filterYear: ano,
-        filterMonth: mes,
-        archiveName: 'NPS_Vendedor_' + mes + '_' + ano + '.csv',
-        archivePath: 'D:/QlikSense/AppsData/Resources/ArquivosNPS/',
-        order: [
-            'Ano', 'Mês', 'Vendedor', 'Cnpj', 'Departamento',
-            'datareferenciainicial', 'datareferenciafinal', 'dataintegracao',
-            'Status', 'NPS', 'Sucesso%'
-        ]
+        archiveName: 'NomeDoArquivo2.csv',
+        archivePath: 'Diretorio onde os arquivos serao salvos',
+        order: ['Array para ordenar as colunas corretamente']
     }
 ];
 
