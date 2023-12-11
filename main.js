@@ -25,16 +25,16 @@ const extractArqs = [
 ];
 
 const job = schedule.scheduleJob('0 40 23 * * *', () => {
-    console.log('Iniciando processo de extração')
+    registraLogs('Iniciando processo de extração');
     async function processaDados(dados) {
         for (const extracao of dados) {
-            console.log('Extracting: ', extracao.archiveName);
+            registraLogs('Extracting: ' + extracao.archiveName);
             await extractData(extracao.id, extracao.filterYear, extracao.filterMonth, extracao.archiveName, extracao.archivePath, extracao.order);
         }
     }
 
     processaDados(extractArqs).then(() => {
-        console.log('Processo concluído');
+        registraLogs('Processo concluído');
     });
 
-})
+});

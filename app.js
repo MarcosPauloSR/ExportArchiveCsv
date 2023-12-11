@@ -30,7 +30,7 @@ const session = enigma.create({
 
 async function extractData(idObject, filterYear, filterMonth, archiveName, archivePath, order) {
 
-  let archive = archivePath+archiveName;
+  let archive = archivePath + archiveName;
 
   return session.open().then((global) => {
     console.log('Session was opened successfully');
@@ -50,13 +50,13 @@ async function extractData(idObject, filterYear, filterMonth, archiveName, archi
           const totalRows = layout.qHyperCube.qSize.qcy;
           const totalColumns = layout.qHyperCube.qSize.qcx;
 
-          console.log(`Total rows in hypercube: ${totalRows}`);
-          console.log(`Total columns in hypercube: ${totalColumns}`);
+          registraLogs(`Total rows in hypercube: ${totalRows}`);
+          registraLogs(`Total columns in hypercube: ${totalColumns}`);
 
           let data = [];
 
           const fetchBatchData = (qTop, qHeight) => {
-            console.log(`Fetching data from row ${qTop} for ${qHeight} rows`);
+            registraLogs(`Fetching data from row ${qTop} for ${qHeight} rows`);
 
             return object.getHyperCubeData('/qHyperCubeDef', [{
               qTop: qTop, qLeft: 0, qWidth: totalColumns, qHeight: qHeight
@@ -84,7 +84,8 @@ async function extractData(idObject, filterYear, filterMonth, archiveName, archi
           }
 
           return fetchBatchData(initialQTop, initialQHeight).then(data => {
-            console.log(`Total rows fetched: ${data.length}`);
+            //console.log(`Total rows fetched: ${data.length}`);
+            registraLogs(`Total rows fetched: ${data.length}`);
 
             data = data.filter(row => {
               const year = row[correctOrder.indexOf('Ano')];
@@ -104,25 +105,51 @@ async function extractData(idObject, filterYear, filterMonth, archiveName, archi
                 })
               )
               .then(() => {
-                console.log('Dados exportados com sucesso para ' + archive);
+                registraLogs('Dados exportados com sucesso para ' + archive);
               })
               .catch(err => {
-                console.error('Erro ao escrever no arquivo CSV', err);
+                registraLogs('Erro ao escrever no arquivo CSV: ' + err);
                 session.close();
               });
           });
         });
       });
     }).catch(err => {
-      console.error('Erro ao recuperar dados do Qlik Sense', err);
+      registraLogs('Erro ao recuperar dados do Qlik Sense: ' + err);
       session.close();
       throw err;
     });
   }).catch(err => {
-    console.error('Erro ao abrir a sessão', err);
+    registraLogs('Erro ao abrir a sessão: ' + err);
     session.close();
     throw err;
   });
 }
 
+function getFormattedDate() {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${day}-${month}-${year}`;
+}
+
+function registraLogs(message) {
+  const timestamp = new Date().toLocaleString();
+  const logMessage = `${timestamp} - ${message}\n`;
+
+  // Nome do arquivo baseado na data atual
+  const logFileName = `log_${getFormattedDate()}.txt`;
+  const logFilePath = path.join('D:/Projetos/ExportExcelApps/logs/', logFileName);
+
+  console.log(logMessage);
+
+  fs.appendFileSync(logFilePath, logMessage, 'utf8');
+
+  if (message.toUpperCase().match('ERRO')) {
+    sendLogMail(logFilePath, getFormattedDate());
+  }
+}
+
 module.exports.extractData = extractData;
+module.exports.registraLogs = registraLogs
