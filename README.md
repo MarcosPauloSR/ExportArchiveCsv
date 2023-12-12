@@ -8,3 +8,9 @@ O objetivo desse software é baixar dados contidos em uma tabela do Qlik Sense e
 
 * Registro de logs
 * Envio de emails para aviso de falhas
+
+## Redes Sociais:
+
+* E-mail: marcospaulosrezende@gmail.com
+* LikedIn: https://www.linkedin.com/in/marcos-paulo-89216a1a4/
+* Instagram: https://www.instagram.com/marcospaulosrezende/
